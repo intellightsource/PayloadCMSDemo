@@ -9,6 +9,8 @@ import { imageHero1 } from './image-hero-1'
 import { post1 } from './post-1'
 import { post2 } from './post-2'
 import { post3 } from './post-3'
+import { serviceCategories } from './service-categories'
+import { buildServicesSeedData } from './services-data'
 
 const collections: CollectionSlug[] = [
   'categories',
@@ -18,6 +20,8 @@ const collections: CollectionSlug[] = [
   'forms',
   'form-submissions',
   'search',
+  'service-categories',
+  'services',
 ]
 
 const globals: GlobalSlug[] = ['header', 'footer']
@@ -46,11 +50,10 @@ export const seed = async ({
   // clear the database
   await Promise.all(
     globals.map((global) =>
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       payload.updateGlobal({
         slug: global,
-        data: {
-          navItems: [],
-        },
+        data: {} as any,
         depth: 0,
         context: {
           disableRevalidate: true,
@@ -215,18 +218,51 @@ export const seed = async ({
     }),
   ])
 
+  payload.logger.info(`— Seeding service categories...`)
+
+  const createdCategories = await Promise.all(
+    serviceCategories.map((cat) =>
+      payload.create({
+        collection: 'service-categories',
+        data: cat,
+      }),
+    ),
+  )
+
+  const categoryMap: Record<string, string> = {}
+  createdCategories.forEach((cat) => {
+    categoryMap[cat.slug as string] = String(cat.id)
+  })
+
+  payload.logger.info(`— Seeding services...`)
+
+  const servicesData = buildServicesSeedData(categoryMap)
+
+  for (const serviceData of servicesData) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    await payload.create({
+      collection: 'services',
+      depth: 0,
+      context: { disableRevalidate: true },
+      data: serviceData as any,
+    })
+  }
+
   payload.logger.info(`— Seeding globals...`)
 
   await Promise.all([
     payload.updateGlobal({
       slug: 'header',
       data: {
+        phone: '(555) 123-4567',
+        ctaLabel: 'Book a Consultation',
+        ctaUrl: '/contact',
         navItems: [
           {
             link: {
               type: 'custom',
-              label: 'Posts',
-              url: '/posts',
+              label: 'Services',
+              url: '/services',
             },
           },
           {
@@ -245,28 +281,25 @@ export const seed = async ({
     payload.updateGlobal({
       slug: 'footer',
       data: {
+        phone: '(555) 123-4567',
+        address: '123 Wellness Blvd\nSuite 100\nYour City, ST 00000',
+        socialLinks: [
+          { platform: 'facebook', url: 'https://facebook.com/wellformmd' },
+          { platform: 'instagram', url: 'https://instagram.com/wellformmd' },
+        ],
         navItems: [
+          {
+            link: {
+              type: 'custom',
+              label: 'Services',
+              url: '/services',
+            },
+          },
           {
             link: {
               type: 'custom',
               label: 'Admin',
               url: '/admin',
-            },
-          },
-          {
-            link: {
-              type: 'custom',
-              label: 'Source Code',
-              newTab: true,
-              url: 'https://github.com/payloadcms/payload/tree/main/templates/website',
-            },
-          },
-          {
-            link: {
-              type: 'custom',
-              label: 'Payload',
-              newTab: true,
-              url: 'https://payloadcms.com/',
             },
           },
         ],

@@ -10,6 +10,26 @@ export const Header: GlobalConfig = {
   },
   fields: [
     {
+      name: 'phone',
+      type: 'text',
+      label: 'Phone Number',
+      admin: {
+        description: 'Displayed in the header, e.g. (555) 123-4567',
+      },
+    },
+    {
+      name: 'ctaLabel',
+      type: 'text',
+      label: 'CTA Button Label',
+      defaultValue: 'Book a Consultation',
+    },
+    {
+      name: 'ctaUrl',
+      type: 'text',
+      label: 'CTA Button URL',
+      defaultValue: '/contact',
+    },
+    {
       name: 'navItems',
       type: 'array',
       fields: [

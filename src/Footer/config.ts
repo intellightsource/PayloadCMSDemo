@@ -10,6 +10,41 @@ export const Footer: GlobalConfig = {
   },
   fields: [
     {
+      name: 'phone',
+      type: 'text',
+      label: 'Phone Number',
+    },
+    {
+      name: 'address',
+      type: 'textarea',
+      label: 'Business Address',
+    },
+    {
+      name: 'socialLinks',
+      type: 'array',
+      label: 'Social Links',
+      maxRows: 6,
+      fields: [
+        {
+          name: 'platform',
+          type: 'select',
+          options: [
+            { label: 'Facebook', value: 'facebook' },
+            { label: 'Instagram', value: 'instagram' },
+            { label: 'Twitter / X', value: 'twitter' },
+            { label: 'LinkedIn', value: 'linkedin' },
+            { label: 'YouTube', value: 'youtube' },
+          ],
+          required: true,
+        },
+        {
+          name: 'url',
+          type: 'text',
+          required: true,
+        },
+      ],
+    },
+    {
       name: 'navItems',
       type: 'array',
       fields: [

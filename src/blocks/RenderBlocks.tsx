@@ -3,21 +3,36 @@ import React, { Fragment } from 'react'
 import type { Page } from '@/payload-types'
 
 import { ArchiveBlock } from '@/blocks/ArchiveBlock/Component'
+import { BenefitsListBlock } from '@/blocks/BenefitsList/Component'
 import { CallToActionBlock } from '@/blocks/CallToAction/Component'
 import { ContentBlock } from '@/blocks/Content/Component'
+import { FAQBlock } from '@/blocks/FAQ/Component'
 import { FormBlock } from '@/blocks/Form/Component'
+import { ImageTextBlock } from '@/blocks/ImageText/Component'
 import { MediaBlock } from '@/blocks/MediaBlock/Component'
+import { RichTextBlockComponent } from '@/blocks/RichTextBlock/Component'
+import { ServiceHeroBlock } from '@/blocks/ServiceHero/Component'
+import { StatsBlock } from '@/blocks/Stats/Component'
 
 const blockComponents = {
   archive: ArchiveBlock,
+  benefitsList: BenefitsListBlock,
   content: ContentBlock,
   cta: CallToActionBlock,
+  faq: FAQBlock,
   formBlock: FormBlock,
+  imageText: ImageTextBlock,
   mediaBlock: MediaBlock,
+  richTextBlock: RichTextBlockComponent,
+  serviceHero: ServiceHeroBlock,
+  stats: StatsBlock,
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type AnyBlock = any
+
 export const RenderBlocks: React.FC<{
-  blocks: Page['layout'][0][]
+  blocks: AnyBlock[]
 }> = (props) => {
   const { blocks } = props
 
@@ -30,12 +45,12 @@ export const RenderBlocks: React.FC<{
           const { blockType } = block
 
           if (blockType && blockType in blockComponents) {
-            const Block = blockComponents[blockType]
+            const Block = blockComponents[blockType as keyof typeof blockComponents]
 
             if (Block) {
+              const isFullWidth = blockType === 'serviceHero'
               return (
-                <div className="my-16" key={index}>
-                  {/* @ts-expect-error there may be some mismatch between the expected types here */}
+                <div className={isFullWidth ? '' : 'my-16'} key={index}>
                   <Block {...block} disableInnerContainer />
                 </div>
               )
