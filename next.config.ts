@@ -48,9 +48,7 @@ const nextConfig: NextConfig = {
   },
   reactStrictMode: true,
   redirects,
-  experimental: {
-    serverComponentsExternalPackages: ['sharp'],
-  },
+  serverExternalPackages: ['sharp', '@libsql/client'],
   turbopack: {
     root: path.resolve(dirname),
   },
