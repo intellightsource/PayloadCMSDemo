@@ -68,11 +68,11 @@ export default async function HomePage() {
                 <Link
                   key={cat.id}
                   href={`/services?category=${cat.slug}`}
-                  className="group flex flex-col items-center text-center p-5 rounded-xl border border-border hover:border-[#2d8a7a] hover:shadow-md transition-all"
+                  className="group flex flex-col items-center text-center p-5 rounded-xl border border-border hover:border-[#2e7e7f] hover:shadow-md transition-all"
                 >
-                  <div className="w-12 h-12 rounded-full bg-[#e8f4f1] group-hover:bg-[#2d8a7a] flex items-center justify-center mb-3 transition-colors">
+                  <div className="w-12 h-12 rounded-full bg-[#e8f4f1] group-hover:bg-[#2e7e7f] flex items-center justify-center mb-3 transition-colors">
                     <svg
-                      className="w-6 h-6 text-[#2d8a7a] group-hover:text-white transition-colors"
+                      className="w-6 h-6 text-[#2e7e7f] group-hover:text-white transition-colors"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -93,7 +93,7 @@ export default async function HomePage() {
             <div className="text-center mt-8">
               <Link
                 href="/services"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-[#2d8a7a] text-white font-semibold rounded text-sm hover:bg-[#246b5e] transition-colors"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-[#2e7e7f] text-white font-semibold rounded text-sm hover:bg-[#246b5e] transition-colors"
               >
                 View All Services
               </Link>

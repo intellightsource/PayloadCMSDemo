@@ -55,12 +55,12 @@ export const WellFormHero: React.FC<Partial<WellFormHeroProps>> = (props) => {
   } = { ...DEFAULTS, ...props }
 
   return (
-    <section className="bg-[#f0f2f5]">
+    <section className="bg-[#f0f2f5] overflow-x-hidden">
       <div className="container py-8 lg:py-6 flex flex-col lg:flex-row gap-10 lg:gap-10 xl:gap-20 items-center">
 
         {/* ── Left: text ── */}
         <div className="flex-1 min-w-0 max-w-[470px]">
-          <h1 className="font-extrabold leading-tight text-[#2E7E7F] mb-[15px]" style={{ fontSize: '42px' }}>
+          <h1 className="font-extrabold leading-tight text-[#2E7E7F] mb-[15px] text-[28px] sm:text-[36px] lg:text-[42px]">
             {heading}
           </h1>
 
@@ -72,16 +72,16 @@ export const WellFormHero: React.FC<Partial<WellFormHeroProps>> = (props) => {
             {description}
           </p>
 
-          <div className="flex flex-row gap-4">
+          <div className="flex flex-row flex-wrap gap-3">
             <Link
               href={primaryCtaUrl}
-              className="px-6 py-3 bg-[#2d8a7a] text-white font-semibold rounded text-sm whitespace-nowrap hover:bg-[#246b5e] transition-colors"
+              className="px-6 py-3 bg-[#2e7e7f] text-white font-semibold rounded text-sm text-center hover:bg-[#246b5e] transition-colors"
             >
               {primaryCtaLabel}
             </Link>
             <Link
               href={secondaryCtaUrl}
-              className="px-6 py-3 border-2 border-[#2d8a7a] text-[#2d8a7a] font-semibold rounded text-sm whitespace-nowrap hover:bg-[#2d8a7a] hover:text-white transition-colors"
+              className="px-6 py-3 border-2 border-[#2e7e7f] text-[#2e7e7f] font-semibold rounded text-sm text-center hover:bg-[#2e7e7f] hover:text-white transition-colors"
             >
               {secondaryCtaLabel}
             </Link>

@@ -2077,32 +2077,45 @@ export interface Header {
  */
 export interface Footer {
   id: number;
-  phone?: string | null;
+  hours?: string | null;
   address?: string | null;
+  copyright?: string | null;
   socialLinks?:
     | {
-        platform: 'facebook' | 'instagram' | 'twitter' | 'linkedin' | 'youtube';
+        platform: 'facebook' | 'instagram' | 'tiktok' | 'whatsapp' | 'twitter' | 'linkedin' | 'youtube';
         url: string;
         id?: string | null;
       }[]
     | null;
-  navItems?:
+  col1Links?:
     | {
-        link: {
-          type?: ('reference' | 'custom') | null;
-          newTab?: boolean | null;
-          reference?:
-            | ({
-                relationTo: 'pages';
-                value: number | Page;
-              } | null)
-            | ({
-                relationTo: 'posts';
-                value: number | Post;
-              } | null);
-          url?: string | null;
-          label: string;
-        };
+        label: string;
+        url: string;
+        newTab?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  col2Links?:
+    | {
+        label: string;
+        url: string;
+        newTab?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  col3Links?:
+    | {
+        label: string;
+        url: string;
+        newTab?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  col4Links?:
+    | {
+        label: string;
+        url: string;
+        newTab?: boolean | null;
         id?: string | null;
       }[]
     | null;
@@ -2181,8 +2194,9 @@ export interface HeaderSelect<T extends boolean = true> {
  * via the `definition` "footer_select".
  */
 export interface FooterSelect<T extends boolean = true> {
-  phone?: T;
+  hours?: T;
   address?: T;
+  copyright?: T;
   socialLinks?:
     | T
     | {
@@ -2190,18 +2204,36 @@ export interface FooterSelect<T extends boolean = true> {
         url?: T;
         id?: T;
       };
-  navItems?:
+  col1Links?:
     | T
     | {
-        link?:
-          | T
-          | {
-              type?: T;
-              newTab?: T;
-              reference?: T;
-              url?: T;
-              label?: T;
-            };
+        label?: T;
+        url?: T;
+        newTab?: T;
+        id?: T;
+      };
+  col2Links?:
+    | T
+    | {
+        label?: T;
+        url?: T;
+        newTab?: T;
+        id?: T;
+      };
+  col3Links?:
+    | T
+    | {
+        label?: T;
+        url?: T;
+        newTab?: T;
+        id?: T;
+      };
+  col4Links?:
+    | T
+    | {
+        label?: T;
+        url?: T;
+        newTab?: T;
         id?: T;
       };
   updatedAt?: T;

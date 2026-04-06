@@ -1,7 +1,33 @@
 import type { GlobalConfig } from 'payload'
 
-import { link } from '@/fields/link'
 import { revalidateFooter } from './hooks/revalidateFooter'
+
+const columnLinksField = (name: string, label: string) => ({
+  name,
+  type: 'array' as const,
+  label,
+  maxRows: 10,
+  admin: {
+    initCollapsed: true,
+  },
+  fields: [
+    {
+      name: 'label',
+      type: 'text' as const,
+      required: true,
+    },
+    {
+      name: 'url',
+      type: 'text' as const,
+      required: true,
+    },
+    {
+      name: 'newTab',
+      type: 'checkbox' as const,
+      label: 'Open in new tab',
+    },
+  ],
+})
 
 export const Footer: GlobalConfig = {
   slug: 'footer',
@@ -10,20 +36,29 @@ export const Footer: GlobalConfig = {
   },
   fields: [
     {
-      name: 'phone',
+      name: 'hours',
       type: 'text',
-      label: 'Phone Number',
+      label: 'Business Hours',
+      defaultValue: 'Mon - Fri: 8am - 5pm | Sat: 9am - 5pm | Sun: Closed',
     },
     {
       name: 'address',
-      type: 'textarea',
+      type: 'text',
       label: 'Business Address',
+      defaultValue: '2675 N Ankeny Blvd Suite 113, Ankeny, IA 50023',
+    },
+    {
+      name: 'copyright',
+      type: 'text',
+      label: 'Copyright Text',
+      defaultValue:
+        '© 2026 Wellform MD - Weight Loss & Wellness. Powered By WelForge. All rights reserved.',
     },
     {
       name: 'socialLinks',
       type: 'array',
       label: 'Social Links',
-      maxRows: 6,
+      maxRows: 8,
       fields: [
         {
           name: 'platform',
@@ -31,6 +66,8 @@ export const Footer: GlobalConfig = {
           options: [
             { label: 'Facebook', value: 'facebook' },
             { label: 'Instagram', value: 'instagram' },
+            { label: 'TikTok', value: 'tiktok' },
+            { label: 'WhatsApp', value: 'whatsapp' },
             { label: 'Twitter / X', value: 'twitter' },
             { label: 'LinkedIn', value: 'linkedin' },
             { label: 'YouTube', value: 'youtube' },
@@ -44,22 +81,10 @@ export const Footer: GlobalConfig = {
         },
       ],
     },
-    {
-      name: 'navItems',
-      type: 'array',
-      fields: [
-        link({
-          appearances: false,
-        }),
-      ],
-      maxRows: 6,
-      admin: {
-        initCollapsed: true,
-        components: {
-          RowLabel: '@/Footer/RowLabel#RowLabel',
-        },
-      },
-    },
+    columnLinksField('col1Links', 'Column 1 Links'),
+    columnLinksField('col2Links', 'Column 2 Links'),
+    columnLinksField('col3Links', 'Column 3 Links'),
+    columnLinksField('col4Links', 'Column 4 Links'),
   ],
   hooks: {
     afterChange: [revalidateFooter],
