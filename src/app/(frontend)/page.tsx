@@ -1,11 +1,11 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import React from 'react'
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 import { cache } from 'react'
 
 import { WellFormHero } from '@/components/WellFormHero'
+import { getCachedGlobal } from '@/utilities/getGlobals'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 
 export const metadata: Metadata = {
@@ -31,11 +31,28 @@ const queryCategories = cache(async () => {
 })
 
 export default async function HomePage() {
-  const categories = await queryCategories()
+  const [categories, siteSettings] = await Promise.all([
+    queryCategories(),
+    getCachedGlobal('site-settings', 1)(),
+  ])
+
+  const settings = siteSettings as import('@/payload-types').SiteSetting
+  const hero = settings?.homepageHero
 
   return (
     <>
-      <WellFormHero />
+      <WellFormHero
+        heading={hero?.heading ?? undefined}
+        subheading={hero?.subheading ?? undefined}
+        description={hero?.description ?? undefined}
+        primaryCtaLabel={hero?.primaryCtaLabel ?? undefined}
+        primaryCtaUrl={hero?.primaryCtaUrl ?? undefined}
+        secondaryCtaLabel={hero?.secondaryCtaLabel ?? undefined}
+        secondaryCtaUrl={hero?.secondaryCtaUrl ?? undefined}
+        imageLeft={typeof hero?.imageLeft === 'object' ? hero.imageLeft : null}
+        imageCenter={typeof hero?.imageCenter === 'object' ? hero.imageCenter : null}
+        imageRight={typeof hero?.imageRight === 'object' ? hero.imageRight : null}
+      />
 
       {/* Service categories grid */}
       {categories.length > 0 && (
@@ -84,29 +101,6 @@ export default async function HomePage() {
           </div>
         </section>
       )}
-
-      {/* 360 Framework teaser */}
-      <section className="py-16 bg-[#f4f6f6]">
-        <div className="container max-w-3xl text-center">
-          <p className="text-xs font-bold uppercase tracking-widest text-[#5c5c99] mb-3">
-            The WellForm 360 Framework
-          </p>
-          <h2 className="text-3xl font-bold text-[#1e5c4a] mb-5">
-            A Complete Approach to Your Health
-          </h2>
-          <p className="text-gray-600 leading-relaxed mb-8">
-            Our physician-designed framework addresses the root causes of weight gain and poor
-            health — not just the symptoms. We combine medical treatment, nutrition guidance,
-            aesthetic care, and mental wellness into one cohesive plan built around you.
-          </p>
-          <Link
-            href="/contact"
-            className="inline-flex items-center gap-2 px-7 py-3.5 bg-[#2d8a7a] text-white font-semibold rounded text-sm hover:bg-[#246b5e] transition-colors"
-          >
-            Book a Free Consultation
-          </Link>
-        </div>
-      </section>
     </>
   )
 }

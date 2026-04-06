@@ -4,11 +4,6 @@
 @config '../../../tailwind.config.mjs';
 
 @custom-variant dark (&:is([data-theme='dark'] *));
-@custom-variant sm (@media (width >= theme(--breakpoint-sm)));
-@custom-variant md (@media (width >= theme(--breakpoint-md)));
-@custom-variant lg (@media (width >= theme(--breakpoint-lg)));
-@custom-variant xl (@media (width >= theme(--breakpoint-xl)));
-@custom-variant 2xl (@media (width >= theme(--breakpoint-2xl)));
 
 @layer base {
   h1,
@@ -29,6 +24,9 @@
 @source inline("lg:col-span-6");
 @source inline("lg:col-span-8");
 @source inline("lg:col-span-12");
+@source inline("xl:flex");
+@source inline("xl:hidden");
+@source inline("xl:inline-flex");
 @source inline("border-border");
 @source inline("bg-card");
 @source inline("border-error");
@@ -39,14 +37,38 @@
 @source inline("bg-warning/30");
 
 @theme {
-  --breakpoint-sm: 40rem;
-  --breakpoint-md: 48rem;
-  --breakpoint-lg: 64rem;
-  --breakpoint-xl: 80rem;
-  --breakpoint-2xl: 86rem;
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1536px;
   --font-mono: var(--font-geist-mono);
   --font-sans: var(--font-geist-sans);
   --font-heading: var(--font-roboto-serif), "Roboto Serif", serif;
+}
+
+@layer utilities {
+  .nav-desktop {
+    display: none;
+  }
+  .nav-cta-btn {
+    display: none;
+  }
+  .nav-burger {
+    display: flex;
+  }
+
+  @media (min-width: 1280px) {
+    .nav-desktop {
+      display: flex;
+    }
+    .nav-cta-btn {
+      display: inline-flex;
+    }
+    .nav-burger {
+      display: none;
+    }
+  }
 }
 
 @layer utilities {

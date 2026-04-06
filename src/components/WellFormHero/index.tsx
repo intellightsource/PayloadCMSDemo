@@ -2,51 +2,99 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 
+import type { Media } from '@/payload-types'
+
+interface WellFormHeroProps {
+  heading: string
+  subheading: string
+  description: string
+  primaryCtaLabel: string
+  primaryCtaUrl: string
+  secondaryCtaLabel: string
+  secondaryCtaUrl: string
+  imageLeft?: Media | null
+  imageCenter?: Media | null
+  imageRight?: Media | null
+}
+
+const DEFAULTS: WellFormHeroProps = {
+  heading: 'Physician-Led Weight Loss Service & Wellness Center in Ankeny',
+  subheading: 'Premium Medical Spa, Wellness, and Mental Health Services — All in One Place',
+  description:
+    'Led by Dr. Patrick Oben, a board-certified obesity doctor, WellForm MD helps you lose weight, reshape your body, and feel your best—inside and out.',
+  primaryCtaLabel: '$100 OFF GLP-1s',
+  primaryCtaUrl: '/contact',
+  secondaryCtaLabel: 'Free InBody Fat Scan',
+  secondaryCtaUrl: '/contact',
+}
+
+const FALLBACK_IMAGES = {
+  left: '/assets/wellform-md-weight-loss-ankeny-hero-woman-weight-loss-woman-happy.webp',
+  center: '/assets/wellform-md-weight-loss-ankeny-hero-man-166x300.webp',
+  right: '/assets/wellform-md-weight-loss-ankeny-hero-woman-weight-loss.webp',
+}
+
+function imgSrc(media: Media | null | undefined, fallback: string): string {
+  return media && typeof media === 'object' && media.url ? media.url : fallback
+}
+
 const CARD_BG = 'bg-[#8b82bf]'
 
-export const WellFormHero: React.FC = () => {
+export const WellFormHero: React.FC<Partial<WellFormHeroProps>> = (props) => {
+  const {
+    heading,
+    subheading,
+    description,
+    primaryCtaLabel,
+    primaryCtaUrl,
+    secondaryCtaLabel,
+    secondaryCtaUrl,
+    imageLeft,
+    imageCenter,
+    imageRight,
+  } = { ...DEFAULTS, ...props }
+
   return (
-    <section className="bg-[#f0f2f5] overflow-hidden">
-      <div className="container py-4 lg:py-4 flex flex-col lg:flex-row gap-10 lg:gap-36 items-center">
+    <section className="bg-[#f0f2f5]">
+      <div className="container py-8 lg:py-6 flex flex-col lg:flex-row gap-10 lg:gap-10 xl:gap-20 items-center">
 
         {/* ── Left: text ── */}
-        <div className="flex-1 max-w-[470px]">
+        <div className="flex-1 min-w-0 max-w-[470px]">
           <h1 className="font-extrabold leading-tight text-[#2E7E7F] mb-[15px]" style={{ fontSize: '42px' }}>
-            Physician-Led Weight Loss Service &amp; Wellness Center in Ankeny
+            {heading}
           </h1>
 
           <p className="text-sm font-extrabold uppercase tracking-wide text-[#5c5c99] mb-5">
-            Premium Medical Spa, Wellness, and Mental Health Services&nbsp;—&nbsp;All in One Place
+            {subheading}
           </p>
 
           <p className="text-gray-700 leading-relaxed mb-8 max-w-lg">
-            Led by Dr. Patrick Oben, a board-certified obesity doctor, WellForm MD helps you lose
-            weight, reshape your body, and feel your best&mdash;inside and out.
+            {description}
           </p>
 
           <div className="flex flex-row gap-4">
             <Link
-              href="/contact"
+              href={primaryCtaUrl}
               className="px-6 py-3 bg-[#2d8a7a] text-white font-semibold rounded text-sm whitespace-nowrap hover:bg-[#246b5e] transition-colors"
             >
-              $100 OFF GLP-1s
+              {primaryCtaLabel}
             </Link>
             <Link
-              href="/contact"
+              href={secondaryCtaUrl}
               className="px-6 py-3 border-2 border-[#2d8a7a] text-[#2d8a7a] font-semibold rounded text-sm whitespace-nowrap hover:bg-[#2d8a7a] hover:text-white transition-colors"
             >
-              Free InBody Fat Scan
+              {secondaryCtaLabel}
             </Link>
           </div>
         </div>
 
         {/* ── Right: image collage ── */}
-        <div className="flex-1 relative w-full max-w-[560px]" style={{ height: 480 }}>
+        <div className="flex-1 w-full max-w-[520px] lg:max-w-none">
 
-          {/* Social proof badge — top-left */}
-          <div className="absolute top-0 z-20 bg-white rounded-2xl shadow-lg px-4 py-3 flex items-center gap-3" style={{ left: '-66px' }}>
+          {/* Social proof badge */}
+          <div className="mb-3 inline-flex bg-white rounded-2xl shadow-lg px-4 py-3 items-center gap-3">
             <div className="flex -space-x-2 flex-shrink-0">
-              {['#b8aad8', '#c8b8e8', '#a898c8'].map((bg, n) => (
+              {(['#b8aad8', '#c8b8e8', '#a898c8'] as const).map((bg, n) => (
                 <div
                   key={n}
                   className="w-8 h-8 rounded-full border-2 border-white flex items-center justify-center text-white text-xs font-bold overflow-hidden"
@@ -70,32 +118,31 @@ export const WellFormHero: React.FC = () => {
             </div>
           </div>
 
-          {/* Image collage: 3 flex columns.
-               Centre column (man + badge) starts at the top of the padded area.
-               Left and right columns have pt-8 so they begin lower — giving the
-               centre card the "elevated" look that matches the design. */}
-          <div className="absolute inset-0 flex gap-3 pt-16">
+          {/* 3-column image row */}
+          <div className="flex gap-3 items-end" style={{ height: 380 }}>
 
-            {/* Col 1: Woman — starts lower (pt-8) */}
-            <div className="flex-1 flex flex-col pt-8">
+            {/* Col 1 — shorter (mt-auto + fixed height) */}
+            <div className="flex-1 flex flex-col gap-3" style={{ height: '85%' }}>
               <div className={`relative rounded-3xl overflow-hidden ${CARD_BG} flex-1`}>
                 <Image
-                  src="/assets/wellform-md-weight-loss-ankeny-hero-woman-weight-loss-woman-happy.webp"
+                  src={imgSrc(imageLeft, FALLBACK_IMAGES.left)}
                   alt="Weight loss transformation"
                   fill
+                  sizes="(max-width: 768px) 33vw, 180px"
                   className="object-cover object-top"
                   priority
                 />
               </div>
             </div>
 
-            {/* Col 2: Man (top) + badge (bottom) — starts at the top */}
-            <div className="flex-1 flex flex-col gap-3">
+            {/* Col 2 — tallest, with badge below */}
+            <div className="flex-1 flex flex-col gap-3" style={{ height: '100%' }}>
               <div className={`relative rounded-3xl overflow-hidden ${CARD_BG} flex-1`}>
                 <Image
-                  src="/assets/wellform-md-weight-loss-ankeny-hero-man-166x300.webp"
+                  src={imgSrc(imageCenter, FALLBACK_IMAGES.center)}
                   alt="Wellness transformation"
                   fill
+                  sizes="(max-width: 768px) 33vw, 180px"
                   className="object-cover object-top"
                 />
               </div>
@@ -111,13 +158,14 @@ export const WellFormHero: React.FC = () => {
               </div>
             </div>
 
-            {/* Col 3: Happy woman — starts lower (pt-8) */}
-            <div className="flex-1 flex flex-col pt-8">
+            {/* Col 3 — shorter */}
+            <div className="flex-1 flex flex-col gap-3" style={{ height: '85%' }}>
               <div className={`relative rounded-3xl overflow-hidden ${CARD_BG} flex-1`}>
                 <Image
-                  src="/assets/wellform-md-weight-loss-ankeny-hero-woman-weight-loss.webp"
+                  src={imgSrc(imageRight, FALLBACK_IMAGES.right)}
                   alt="Happy patient"
                   fill
+                  sizes="(max-width: 768px) 33vw, 180px"
                   className="object-cover object-top"
                 />
               </div>

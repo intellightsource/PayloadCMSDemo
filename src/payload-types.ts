@@ -2125,6 +2125,21 @@ export interface SiteSetting {
    */
   defaultMetaDescription?: string | null;
   /**
+   * Controls the main hero section on the homepage.
+   */
+  homepageHero?: {
+    heading?: string | null;
+    subheading?: string | null;
+    description?: string | null;
+    primaryCtaLabel?: string | null;
+    primaryCtaUrl?: string | null;
+    secondaryCtaLabel?: string | null;
+    secondaryCtaUrl?: string | null;
+    imageLeft?: (number | null) | Media;
+    imageCenter?: (number | null) | Media;
+    imageRight?: (number | null) | Media;
+  };
+  /**
    * e.g. G-XXXXXXXXXX — leave blank until ready to activate.
    */
   ga4Id?: string | null;
@@ -2201,6 +2216,20 @@ export interface SiteSettingsSelect<T extends boolean = true> {
   siteName?: T;
   defaultMetaTitle?: T;
   defaultMetaDescription?: T;
+  homepageHero?:
+    | T
+    | {
+        heading?: T;
+        subheading?: T;
+        description?: T;
+        primaryCtaLabel?: T;
+        primaryCtaUrl?: T;
+        secondaryCtaLabel?: T;
+        secondaryCtaUrl?: T;
+        imageLeft?: T;
+        imageCenter?: T;
+        imageRight?: T;
+      };
   ga4Id?: T;
   facebookPixelId?: T;
   updatedAt?: T;
