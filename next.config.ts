@@ -48,6 +48,9 @@ const nextConfig: NextConfig = {
   },
   reactStrictMode: true,
   redirects,
+  experimental: {
+    serverComponentsExternalPackages: ['sharp'],
+  },
   turbopack: {
     root: path.resolve(dirname),
   },
