@@ -281,27 +281,37 @@ export const seed = async ({
     payload.updateGlobal({
       slug: 'footer',
       data: {
-        phone: '(555) 123-4567',
-        address: '123 Wellness Blvd\nSuite 100\nYour City, ST 00000',
+        hours: 'Mon - Fri: 8am - 5pm | Sat: 9am - 5pm | Sun: Closed',
+        address: '2675 N Ankeny Blvd Suite 113, Ankeny, IA 50023',
         socialLinks: [
           { platform: 'facebook', url: 'https://facebook.com/wellformmd' },
           { platform: 'instagram', url: 'https://instagram.com/wellformmd' },
         ],
-        navItems: [
-          {
-            link: {
-              type: 'custom',
-              label: 'Services',
-              url: '/services',
-            },
-          },
-          {
-            link: {
-              type: 'custom',
-              label: 'Admin',
-              url: '/admin',
-            },
-          },
+        col1Links: [
+          { label: 'About Us', url: '/' },
+          { label: 'Privacy Policy', url: '/' },
+          { label: 'Terms of Service', url: '/' },
+          { label: 'Disclaimer', url: '/' },
+          { label: 'Book Consultation', url: '/' },
+        ],
+        col2Links: [
+          { label: 'Contact Us', url: '/' },
+          { label: 'New Client Specials', url: '/' },
+          { label: 'Before and After', url: '/' },
+          { label: 'Membership', url: '/' },
+          { label: 'Signature Packages', url: '/' },
+        ],
+        col3Links: [
+          { label: 'All Treatments', url: '/services' },
+          { label: 'Business Solutions', url: '/' },
+          { label: 'Functional Wellness', url: '/' },
+          { label: 'Sexual Wellness', url: '/' },
+          { label: 'Emotional Wellness', url: '/' },
+        ],
+        col4Links: [
+          { label: 'Skincare & Anti-Aging', url: '/' },
+          { label: 'Body Sculpting', url: '/' },
+          { label: 'Weight Loss Service in Ankeny', url: '/' },
         ],
       },
     }),

@@ -80,13 +80,13 @@ export const HeaderNav: React.FC<HeaderNavProps> = ({ data, ctaLabel, ctaUrl }) 
 
             <nav className="flex-1 overflow-y-auto px-5 py-6 flex flex-col gap-4">
               {navItems.map(({ link }, i) => (
-                <CMSLink
-                  key={i}
-                  {...link}
-                  appearance="link"
-                  className="text-base font-medium text-gray-700 hover:text-[#3d8a7a] transition-colors"
-                  onClick={() => setOpen(false)}
-                />
+                <div key={i} onClick={() => setOpen(false)}>
+                  <CMSLink
+                    {...link}
+                    appearance="link"
+                    className="text-base font-medium text-gray-700 hover:text-[#3d8a7a] transition-colors"
+                  />
+                </div>
               ))}
               <Link
                 href="/search"
