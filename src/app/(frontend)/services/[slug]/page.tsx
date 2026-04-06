@@ -61,6 +61,7 @@ export default async function ServiceDetailPage({ params: paramsPromise }: Args)
 
       {/* JSON-LD structured data */}
       <JsonLd
+        id="json-ld-service"
         data={buildServiceSchema({
           name: service.title,
           description: service.excerpt,
@@ -68,7 +69,7 @@ export default async function ServiceDetailPage({ params: paramsPromise }: Args)
           image: imageUrl,
         })}
       />
-      <JsonLd data={buildLocalBusinessSchema()} />
+      <JsonLd id="json-ld-local-business" data={buildLocalBusinessSchema()} />
 
       {/* Block-driven content */}
       {service.layout && service.layout.length > 0 ? (

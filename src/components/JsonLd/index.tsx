@@ -1,12 +1,14 @@
+import Script from 'next/script'
 import React from 'react'
 
 // Renders a JSON-LD <script> tag for structured data.
-// Usage: <JsonLd data={schemaObject} />
-export const JsonLd: React.FC<{ data: Record<string, unknown> }> = ({ data }) => {
+// Uses next/script to avoid React 19's inline-script warning.
+// Usage: <JsonLd id="service-schema" data={schemaObject} />
+export const JsonLd: React.FC<{ id: string; data: Record<string, unknown> }> = ({ id, data }) => {
   return (
-    <script
+    <Script
+      id={id}
       type="application/ld+json"
-      // eslint-disable-next-line react/no-danger
       dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
     />
   )
